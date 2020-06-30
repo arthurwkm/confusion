@@ -7,31 +7,35 @@ class Menu extends Component {
     this.state = {
       selectedDish: null
     };
+    console.log('MenuComponent constructor is invoked')
   }
 
   onDishSelect(dish) {
-    this.setState({ selectedDish: dish});
+    this.props.parentCallback(dish);
   }
 
-  renderDish(dish){
-    if(dish != null){
-      return(
-        <Card>
-          <CardImg width="100%" src={dish.image} alt={dish.name} />
-          <CardBody>
-            <CardTitle>{dish.name}</CardTitle>
-            <CardText>{dish.description}</CardText>
-          </CardBody>
-        </Card>
-      );
-    }else{
-      return(
-        <div></div>
-      );
-    }
+  // renderDish(dish){
+  //   if(dish != null){
+  //     return(
+  //       <Card>
+  //         <CardImg width="100%" src={dish.image} alt={dish.name} />
+  //         <CardBody>
+  //           <CardTitle>{dish.name}</CardTitle>
+  //           <CardText>{dish.description}</CardText>
+  //         </CardBody>
+  //       </Card>
+  //     );
+  //   }else{
+  //     return(
+  //       <div></div>
+  //     );
+  //   }
+  // }
+  componentDidMount(){
+    console.log('MenuComponent componentDidMount is invoked')
   }
-
   render() {
+    console.log('MenuComponent render is invoked')
     //o dishes.js é passado como props para o menucomponent a partir do app.js
     //esses dishes então são preparados em uma constante usando uma função para mapear cada dish a um objeto html
     // o onclick chama a função onDishSelect que define qual foi o dish selecionado
@@ -58,9 +62,9 @@ class Menu extends Component {
           {menu}
 
         </div>
-        <div className="row">
+        {/* <div className="row">
           {this.renderDish(this.state.selectedDish)}
-        </div>
+        </div> */}
       </div>
     );
   }
