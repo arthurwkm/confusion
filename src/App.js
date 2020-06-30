@@ -32,8 +32,9 @@ class App extends Component {
           <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>  
         </div> 
       </Navbar>
-      <Menu dishes = {this.state.dishes} parentCallback = {this.callbackFunction}/>
-      <DishDetail dish = {this.state.selectedDish}/>
+      <Menu dishes = {this.state.dishes}/>
+      {/* <Menu dishes = {this.state.dishes} parentCallback = {this.callbackFunction}/> */}
+      {/* <DishDetail dish = {this.state.selectedDish}/> */}
     </div>
   );
 }
