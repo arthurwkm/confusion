@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import { Navbar, NavbarBrand } from 'reactstrap';
-import Menu from './components/MenuComponent';
-import DishDetail from './components/DishDetailComponent';
+import Main from './components/MainComponent';
 import './App.css';
 import { DISHES } from './shared/dishes';
 //importando a constante
@@ -10,16 +7,7 @@ import { DISHES } from './shared/dishes';
 
 class App extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      dishes: DISHES,
-      selectedDish: null
-      //definindo a variavel para a constante importada
-    };
-  }
-
-  callbackFunction = (childData) =>{
+  callbackFunction(childData){
     this.setState({selectedDish: childData})
   }
 
@@ -27,14 +15,7 @@ class App extends Component {
   return (
     
     <div>
-      <Navbar dark color = "primary">    
-        <div className="container">
-          <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>  
-        </div> 
-      </Navbar>
-      <Menu dishes = {this.state.dishes}/>
-      {/* <Menu dishes = {this.state.dishes} parentCallback = {this.callbackFunction}/> */}
-      {/* <DishDetail dish = {this.state.selectedDish}/> */}
+      <Main/>
     </div>
   );
 }

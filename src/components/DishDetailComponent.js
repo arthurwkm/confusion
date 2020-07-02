@@ -29,7 +29,7 @@ class DishDetail extends Component {
   renderComments(dish) {
     if (dish != null) {
       return (
-        <div>
+        <div class = "container">
           <h4>Comments:</h4>
           <ul className = "list-group"> 
             <div>
@@ -42,7 +42,7 @@ class DishDetail extends Component {
                       {com.comment}
                     </li>
                     <li className="list-group-item">
-                      {"-- " + com.author +", "+ com.date}
+                      {"-- " + com.author +", "+ new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(com.date)))}
                     </li>
                   </div>
                 );
