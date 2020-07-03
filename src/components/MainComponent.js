@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+import Header from './HeaderComponent';
+import Home from './HomeComponent';
+import Footer from './FooterComponent'
 import Menu from './MenuComponent';
 import DishDetail from './DishDetailComponent';
 import { DISHES } from '../shared/dishes';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 
 class Main extends Component {
@@ -16,23 +19,26 @@ class Main extends Component {
     };
   }
 
-  onDishSelect(dishId) {
-    this.setState({selectedDish: dishId})
-  }
+  
 
   render(){
+
+    const HomePage = () => {
+      return(
+        <Home/>
+      );
+    }
   return (
     
     <div>
-      <Navbar dark color = "primary">    
-        <div className="container">
-          <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>  
-        </div> 
-      </Navbar>
-      <Menu dishes = {this.state.dishes} onClick = {(dishId) => this.onDishSelect(dishId)}/>
-      {/* manda para o menu uma função que recebe o parametro dishId e executa a função this.onDishSelect(dishId)
-      que vai mudar o state de MainComponent a partir do MenuComponent (callback function)      */}
-      <DishDetail dish = {this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]}/>
+      <Header/>
+      <Switch>
+        <Route path="/home" component={HomePage} />
+        <Route exact path="/menu" component={() => <Menu dishes={this.state.dishes}/>} />
+        {/* se nenhuma route der match vá para o redirect */}
+        <Redirect to="/home"/>
+      </Switch>
+      <Footer/>
     </div>
   );
 }
