@@ -5,6 +5,7 @@ import Footer from './FooterComponent'
 import Menu from './MenuComponent';
 import DishDetail from './DishDetailComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { LEADERS } from '../shared/leaders';
@@ -55,6 +56,7 @@ class Main extends Component {
         {/* se nenhuma route der match vá para o redirect */}
         <Route path = "/menu/:dishId" component = {DishWithId}/>
         <Route exact path="/contactus" component={() => <Contact/>} />
+        <Route exact path="/aboutus" component={() => <About leaders = {this.state.leaders}/>} /> 
         <Redirect to="/home"/>
       </Switch>
       <Footer/>
