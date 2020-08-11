@@ -1,6 +1,94 @@
 import React, { Component, List, ListItem } from 'react';
-import { Breadcrumb, BreadcrumbItem, Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import {
+  Breadcrumb, BreadcrumbItem, Card, CardImg,
+  CardImgOverlay, CardText, CardBody, CardTitle,
+  Button, Modal, ModalHeader, ModalBody, Form, FormGroup,
+  Label, Input, Row
+} from 'reactstrap';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
+
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+
+class CommentsForm extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false
+    };
+
+    this.toggleModal = this.toggleModal.bind(this);
+    this.handleSubmitComment = this.handleSubmitComment.bind(this);
+  }
+
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen
+    });
+  }
+
+  handleSubmitComment(values) {
+    this.toggleModal();
+    console.log("Current State is: " + JSON.stringify(values));
+    alert("Current State is: " + JSON.stringify(values));
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <Button outline onClick={this.toggleModal}>
+          <span className="fa fa-pencil fa-lg"></span> Submit Comment
+        </Button>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader isOpen={this.state.isModalOpen} toggle={this.toggleModal}>Submit Comment</ModalHeader>
+          <ModalBody>
+            <LocalForm onSubmit={(values) => this.handleSubmitComment(values)}>
+              <Row className="form-group">
+                <Label htmlFor="rating">Rating</Label>
+                <Control.select model=".rating" name="rating"
+                  className="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </Control.select>
+              </Row>
+              <Row className="form-group">
+                <Label htmlFor="name">Your Name</Label>
+                <Control.text model=".name" id="name" name="name" placeholder="Your Name"
+                  className="form-control"
+                  validators={{
+                    minLength: minLength(3), maxLength: maxLength(15)
+                  }}
+                />
+                <Errors
+                  className="text-danger"
+                  model=".name"
+                  show="touched"
+                  messages={{
+                    minLength: 'Must be greater than 2 characters',
+                    maxLength: 'Must be 15 characters or less'
+                  }}
+                />
+              </Row>
+              <Row className="form-group">
+                <Label htmlFor="comment">Comment</Label>
+                <Control.textarea model=".comment" id="comment" name="comment"
+                  rows="12"
+                  className="form-control" />
+              </Row>
+
+              <Button className="pl-10" type="submit" value="submit" color="primary">Submit</Button>
+            </LocalForm>
+          </ModalBody>
+        </Modal>
+      </div>
+    );
+  }
+}
 
 
 function RenderDish(props) {
@@ -24,7 +112,7 @@ function RenderDish(props) {
 }
 
 
-function RenderComments({comments}) {
+function RenderComments({ comments }) {
   if (comments != null) {
     return (
       <div class="container">
@@ -48,6 +136,7 @@ function RenderComments({comments}) {
             }
           </div>
         </ul>
+        <CommentsForm />
       </div>
     );
   } else {
@@ -63,6 +152,7 @@ function DishDetail(props) {
     <div className="container">
       <div className="row">
         <Breadcrumb>
+
           <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
           <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
         </Breadcrumb>
@@ -71,15 +161,14 @@ function DishDetail(props) {
           <hr />
         </div>
       </div>
-
-      <div className="col-md-5">
-        <RenderDish dish={props.dish} />
-
+      <div className="row">
+        <div className="col-12 col-md-5 m-1">
+          <RenderDish dish={props.dish} />
+        </div>
+        <div className="col-12 col-md-5 m-1">
+          <RenderComments comments={props.comments} />
+        </div>
       </div>
-      <div className="col-md-5">
-        <RenderComments dish={props.comments} />
-      </div>
-
     </div>
   );
 }
