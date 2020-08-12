@@ -4,6 +4,8 @@ import * as ActionTypes from './ActionTypes';
 //ActionCreators define um objeto js chamado ação
 //Reducers usam a ação para retornar um novo estado atualizado
 //Store ??
+import { DISHES } from '../shared/dishes';
+
 
 export const addComment = (dishId, rating, author, comment) => ({
     type: ActionTypes.ADD_COMMENT,
@@ -13,4 +15,27 @@ export const addComment = (dishId, rating, author, comment) => ({
         author: author,
         comment: comment
     }
+});
+//this is a thunk vvvvvvvvvv
+export const fetchDishes = () => (dispatch) => {
+    dispatch(dishesLoading(true));
+
+    setTimeout(() => {
+        dispatch(addDishes(DISHES));
+    }, 2000);
+    //setTimeout =  apos delay de x ms executa função
+}
+
+export const dishesLoading = () => ({
+    type: ActionTypes.DISHES_LOADING
+});
+
+export const dishesFailed = (errmess) => ({
+    type: ActionTypes.DISHES_FAILED,
+    payload: errmess
+});
+
+export const addDishes = (dishes) => ({
+    type: ActionTypes.ADD_DISHES,
+    payload: dishes
 });
