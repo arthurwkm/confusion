@@ -9,6 +9,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent'
 import { baseUrl } from '../shared/baseUrl';
+import { postComment } from '../redux/ActionCreators';
 
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -34,7 +35,7 @@ class CommentsForm extends Component {
 
   handleSubmitComment(values) {
     this.toggleModal();
-    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)
+    this.props.postComment(this.props.dishId, values.rating, values.author, values.comment)
   }
 
   render() {
@@ -114,7 +115,7 @@ function RenderDish(props) {
 }
 
 
-function RenderComments({ comments, addComment, dishId }) {
+function RenderComments({ comments, postComment, dishId }) {
   if (comments != null) {
     return (
       <div class="container">
@@ -138,7 +139,7 @@ function RenderComments({ comments, addComment, dishId }) {
             }
           </div>
         </ul>
-        <CommentsForm addComment={addComment} dishId={dishId} />
+        <CommentsForm postComment={postComment} dishId={dishId} />
       </div>
     );
   } else {
@@ -182,7 +183,7 @@ function DishDetail(props) {
         <div className="row">
           <RenderDish dish={props.dish} />
           <RenderComments comments={props.comments}
-            addComment={props.addComment}
+            postComment={props.postComment}
             dishId={props.dish.id} />
         </div>
       </div>
