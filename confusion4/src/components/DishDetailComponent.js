@@ -8,6 +8,8 @@ import {
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent'
+import { baseUrl } from '../shared/baseUrl';
+
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -96,7 +98,7 @@ function RenderDish(props) {
     return (
       <div>
         <Card>
-          <CardImg width="100%" src={props.dish.image} alt={props.dish.name} />
+          <CardImg width="100%" src={baseUrl + props.dish.image} alt={props.dish.name} />
           <CardBody>
             <CardTitle>{props.dish.name}</CardTitle>
             <CardText>{props.dish.description}</CardText>
