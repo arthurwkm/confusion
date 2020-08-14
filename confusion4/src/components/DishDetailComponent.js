@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent'
 import { baseUrl } from '../shared/baseUrl';
 import { postComment } from '../redux/ActionCreators';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -98,13 +99,18 @@ function RenderDish(props) {
   if (props.dish != null) {
     return (
       <div>
-        <Card>
-          <CardImg width="100%" src={baseUrl + props.dish.image} alt={props.dish.name} />
-          <CardBody>
-            <CardTitle>{props.dish.name}</CardTitle>
-            <CardText>{props.dish.description}</CardText>
-          </CardBody>
-        </Card>
+        <FadeTransform in
+          transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+          }}>
+          <Card>
+            <CardImg width="100%" src={baseUrl + props.dish.image} alt={props.dish.name} />
+            <CardBody>
+              <CardTitle>{props.dish.name}</CardTitle>
+              <CardText>{props.dish.description}</CardText>
+            </CardBody>
+          </Card>
+        </FadeTransform>
       </div>
     );
   } else {
@@ -121,11 +127,13 @@ function RenderComments({ comments, postComment, dishId }) {
       <div class="container">
         <h4>Comments:</h4>
         <ul className="list-group">
+          <Stagger in>
           <div>
             {
               comments.map(function (com) {
                 console.log(com.author);
                 return (
+                  <Fade in>
                   <div>
                     <li className="list-group-item">
                       {com.comment}
@@ -134,10 +142,12 @@ function RenderComments({ comments, postComment, dishId }) {
                       {"-- " + com.author + ", " + new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(com.date)))}
                     </li>
                   </div>
+                  </Fade>
                 );
               })
             }
           </div>
+          </Stagger>
         </ul>
         <CommentsForm postComment={postComment} dishId={dishId} />
       </div>
