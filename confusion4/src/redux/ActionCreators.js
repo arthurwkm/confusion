@@ -4,7 +4,6 @@ import * as ActionTypes from './ActionTypes';
 //ActionCreators define um objeto js chamado ação
 //Reducers usam a ação para retornar um novo estado atualizado
 //Store ??
-import { DISHES } from '../shared/dishes';
 import { baseUrl } from '../shared/baseUrl';
 
 export const addComment = (comment) => ({

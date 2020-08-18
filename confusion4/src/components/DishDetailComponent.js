@@ -1,15 +1,14 @@
-import React, { Component, List, ListItem } from 'react';
+import React, { Component, } from 'react';
 import {
   Breadcrumb, BreadcrumbItem, Card, CardImg,
-  CardImgOverlay, CardText, CardBody, CardTitle,
-  Button, Modal, ModalHeader, ModalBody, Form, FormGroup,
-  Label, Input, Row
+   CardText, CardBody, CardTitle,
+  Button, Modal, ModalHeader, ModalBody, 
+  Label,  Row
 } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent'
 import { baseUrl } from '../shared/baseUrl';
-import { postComment } from '../redux/ActionCreators';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
